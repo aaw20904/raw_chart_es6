@@ -121,7 +121,7 @@ let paintSubClass = (function(){
       }
 
       paintDiagramData (data) {
-        let iter;
+        let dataIter, colorIter;
         let lengthOfY;
         let privMem = m.get(this);
           /*set count*/
@@ -131,8 +131,8 @@ let paintSubClass = (function(){
           }
            /*calculating a rate = y to real width*/
         /*dividing Y size on 10 pieces */
-        let stepY = privMemb.limits.h * 0.1;
-        let stepX =  privMemb.limits.w * 0.1;
+        let stepY = privMem.limits.h * 0.1;
+        let stepX =  privMem.limits.w * 0.1;
         /*a count of pixels per one item*/
         let itemStepX = (stepX * 8) / data.length;
         let cnv = document.getElementById("canvas001");
@@ -147,15 +147,18 @@ let paintSubClass = (function(){
         colorSet.add("blue");
         colorSet.add("indigo");
         colorSet.add("violet");
-        iter = data[Symbol.iterator]();
-        let result = iter.next();
+        dataIter = data[Symbol.iterator]();
+        colorIter = colorSet.entries();
+        let resultData = dataIter.next();
+           /*get a color*/
+        let resultColor = colorIter.next();
         let offset = stepX;
-        while (!result.done) {
-        lengthOfY = ((stepY * 8) / privMem.maxArg) * result.value;
-         ctx.fillRect(offset + 2, ((stepY * 8) - lengthOfY) + stepY)
-            
-          
-          coordX += itemStep;
+        while (!resultData.done) {
+            /*paint a fill rect with Y data*/
+          privMem.paintIemOnCanvas (100, resultData.value, resultColor.value[0], offset, stepX * 0.5, privMem.limits);
+          offset += stepX*0.5;
+          resultData = dataIter.next();   
+          resultColor = colorIter.next();
         }
       }
 
@@ -171,5 +174,6 @@ let paintSubClass = (function(){
 window.onload = ()=>{
   let q = new paintSubClass();
   q.paintScale("blue",100);
-  q.test();
+ // q.test();
+ q.paintDiagramData([10,15,20,25,30,35,50]);
 }
