@@ -189,11 +189,16 @@ window.onload = ()=>{
  q.paintDiagramData([10,15,20,25,30,35,50]);
 
  window.addEventListener("resize",()=>{
-   let z = (Math.random()*60)+10;
+   let a = (Math.random()*60)+10;
+   let b = (Math.random()*60)+10;
+   let c = (Math.random()*60)+10;
+   let d = (Math.random()*60)+10;
+   let e = (Math.random()*60)+10;
+   let f = (Math.random()*60)+10;
   q.updateLimits();  
   q.clearCanvas();
   q.paintScale('blue',100);
-  q.paintDiagramData([5,10,15,20,25,z]);
+  q.paintDiagramData([a,b,c,d,e,f]);
  });
 
 }
