@@ -49,6 +49,10 @@ let paintSubClass = (function(){
           m.set(this,privateMembers);
           privateMembers.setCanvasLimits(privateMembers.getWindowLimits(), privateMembers.limits,"canvas001");
       }
+       updateLimits () {
+          let priv = m.get(this);
+          priv.setCanvasLimits(privateMembers.getWindowLimits(), privateMembers.limits,"canvas001");
+       }
 
       paintScale (color="black",y=100) {
         let privMemb = m.get(this);
@@ -120,6 +124,13 @@ let paintSubClass = (function(){
         ctx.stroke();
       }
 
+      clearCanvas () {
+        let secret = m.get(this);
+        let cnv = document.getElementById("canvas001");
+        let ctx = cnv.getContext("2d");
+        ctx.clearRect(0, 0, secret.limits.w, secret.limits.h);
+      }
+
       paintDiagramData (data) {
         let dataIter, colorIter;
         let lengthOfY;
@@ -176,4 +187,13 @@ window.onload = ()=>{
   q.paintScale("blue",100);
  // q.test();
  q.paintDiagramData([10,15,20,25,30,35,50]);
+
+ window.addEventListener("resize",()=>{
+   let z = (Math.random()*60)+10;
+  q.updateLimits();  
+  q.clearCanvas();
+  q.paintScale('blue',100);
+  q.paintDiagramData([5,10,15,20,25,z]);
+ });
+
 }
